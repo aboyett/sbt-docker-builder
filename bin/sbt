@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+set -e
+
+SCRIPTS_DIR="/usr/local/bin"
+
+if [ "${CI}" == "drone" ] ; then
+    echo "Drone CI detected."
+    export DRONE_DIR="/drone"
+    CI_SETUP_SENTINEL="${DRONE_DIR}/.ci-stamp"
+    SCRIPTS_DIR="/usr/local/bin"
+
+    if [ ! -f ${CI_SETUP_SENTINEL} ] ; then
+	touch ${CI_SETUP_SENTINEL}
+        . ${SCRIPTS_DIR}/credential-init.sh
+    fi
+else
+    echo "CI environment not detected. Running sbt without special preparation."
+fi
+
+sbt-paulp $@
