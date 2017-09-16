@@ -8,7 +8,8 @@ if [ "${CI}" == "drone" ] ; then
     echo "Drone CI detected."
     export DRONE_DIR="/drone"
     CI_SETUP_SENTINEL="${DRONE_DIR}/.ci-stamp"
-    SCRIPTS_DIR="/usr/local/bin"
+
+    . ${SCRIPTS_DIR}/cache-init.sh
 
     if [ ! -f ${CI_SETUP_SENTINEL} ] ; then
 	touch ${CI_SETUP_SENTINEL}
