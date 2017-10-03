@@ -6,7 +6,7 @@ SCRIPTS_DIR="/usr/local/bin"
 
 if [ "${CI}" == "drone" ] ; then
     echo "Drone CI detected."
-    export DRONE_DIR="/drone"
+    export CACHE_DIR="/drone"
 
     . ${SCRIPTS_DIR}/cache-init.sh
     . ${SCRIPTS_DIR}/credential-init.sh
