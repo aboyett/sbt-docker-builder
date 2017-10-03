@@ -12,7 +12,7 @@ if [ "${CI}" == "drone" ] ; then
 elif [ "${CI}" == "true" -a "${GITLAB_CI}" == "true" ] ; then
     echo "Gitlab CI detected."
     export DETECTED_CI="gitlab-ci"
-    export CACHE_DIR="/cache"
+    export CACHE_DIR="/builds/cache"
 else
     echo "CI environment not detected. Running sbt without special preparation."
 fi
