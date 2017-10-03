@@ -6,15 +6,10 @@ SCRIPTS_DIR="/usr/local/bin"
 
 if [ "${CI}" == "drone" ] ; then
     echo "Drone CI detected."
-    export DRONE_DIR="/drone"
-    CI_SETUP_SENTINEL="${DRONE_DIR}/.ci-stamp"
+    export CACHE_DIR="/drone"
 
     . ${SCRIPTS_DIR}/cache-init.sh
-
-    if [ ! -f ${CI_SETUP_SENTINEL} ] ; then
-        touch ${CI_SETUP_SENTINEL}
-        . ${SCRIPTS_DIR}/credential-init.sh
-    fi
+    . ${SCRIPTS_DIR}/credential-init.sh
 else
     echo "CI environment not detected. Running sbt without special preparation."
 fi
