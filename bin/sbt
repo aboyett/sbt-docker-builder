@@ -6,12 +6,20 @@ SCRIPTS_DIR="/usr/local/bin"
 
 if [ "${CI}" == "drone" ] ; then
     echo "Drone CI detected."
+    export DETECTED_CI="drone"
     export CACHE_DIR="/drone"
 
-    . ${SCRIPTS_DIR}/cache-init.sh
-    . ${SCRIPTS_DIR}/credential-init.sh
+elif [ "${CI}" == "true" -a "${GITLAB_CI}" == "true" ] ; then
+    echo "Gitlab CI detected."
+    export DETECTED_CI="gitlab-ci"
+    export CACHE_DIR="/cache"
 else
     echo "CI environment not detected. Running sbt without special preparation."
+fi
+
+if [ -n "$DETECTED_CI" ] ; then
+    . ${SCRIPTS_DIR}/cache-init.sh
+    . ${SCRIPTS_DIR}/credential-init.sh
 fi
 
 sbt-paulp $@
